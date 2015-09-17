@@ -1,0 +1,12 @@
+*.classpath
+*.project
+*.prefs
+*.xml
+*
+*.class
+*.properties
+*.gitignore
+*.thrift
+*.struct
+*.sql
+*.jar
