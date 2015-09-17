@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+    <!-- ActiveMQ 连接工厂 -->
+    <bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="${active.broker_url}" />
+        <!-- 对PERSISTENT的消息进行异步发送(NON_PERSISTENT消息默认异步发送) -->
+        <!-- <property name="useAsyncSend" value="true" /> -->
+    </bean>
+
+    <!-- Spring Caching 连接工厂 -->
+    <bean id="activeMQCachingConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="targetConnectionFactory" ref="activeMQConnectionFactory" />
+        <property name="sessionCacheSize" value="10" />
+    </bean>
+
+    <!-- Spring JMS Template -->
+    <bean id="activeMQJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="activeMQCachingConnectionFactory" />
+        <!-- 使 deliveryMode, priority, timeToLive设置生效 -->
+        <property name="explicitQosEnabled" value="true" />
+        <!-- 设置NON_PERSISTENT模式, 默认为PERSISTENT -->
+        <property name="deliveryPersistent" value="false" />
+        <!-- 设置优先级, 默认为4 -->
+        <property name="priority" value="9" />
+    </bean>    
+    <bean class="org.lottery.common.message.impl.jms.MessageProducerJmsImpl" />
+</beans>
