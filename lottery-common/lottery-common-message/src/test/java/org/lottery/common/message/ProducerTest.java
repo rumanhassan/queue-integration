@@ -9,7 +9,6 @@ package org.lottery.common.message;
 import java.util.Random;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.integration.kafka.support.KafkaHeaders;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.MessageChannel;
 
@@ -30,8 +29,8 @@ public class ProducerTest {
         final MessageChannel channel = ctx.getBean("common-message.producer", MessageChannel.class);
 
         channel.send(MessageBuilder.withPayload("from messageChannel" + System.currentTimeMillis())
-                .setHeader(KafkaHeaders.MESSAGE_KEY, "key")
-                .setHeader(KafkaHeaders.TOPIC, "test")
+                .setHeader("messageKey", "key")
+                .setHeader("topic", "test")
                 .build());
         
         MessageProducer messageProducer = ctx.getBean(MessageProducer.class);

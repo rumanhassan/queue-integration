@@ -1,5 +1,7 @@
 package org.lottery.common.message;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +22,10 @@ public class MessageProducerTest {
 
     @Test
     public void testSend() throws InterruptedException {
-        String payload = "11111111111";
-        messageProducer.send("test", payload);
+        for(int i=0;i < 10; i++) {
+            messageProducer.send("test", i+"");
+        }
         Thread.sleep(10000);
-        System.out.println("passed");
     }
     
 }

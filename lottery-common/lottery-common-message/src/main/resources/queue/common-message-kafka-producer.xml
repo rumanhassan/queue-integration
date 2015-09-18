@@ -15,10 +15,10 @@
     </int:channel>
     <int-kafka:outbound-channel-adapter id="kafkaOutboundChannelAdapter"
                                         kafka-producer-context-ref="kafkaProducerContext"
-                                        auto-startup="false"
+                                        auto-startup="true"
                                         channel="common-message.producer"
                                         order="3">
-        <int:poller fixed-delay="10" time-unit="MILLISECONDS" receive-timeout="0" task-executor="taskExecutor"/>
+        <int:poller fixed-delay="1000" time-unit="MILLISECONDS" receive-timeout="0" task-executor="taskExecutor"/>
     </int-kafka:outbound-channel-adapter>
     <task:executor id="taskExecutor" pool-size="5" keep-alive="120" queue-capacity="500"/>
     <bean id="producerProperties"
